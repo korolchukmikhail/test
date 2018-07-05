@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Itransition_Insurance>
+            <version>1.0.0</version>
+        </Itransition_Insurance>
+    </modules>
+    <global>
+        <helpers>
+            <it_insurance>
+                <class>Itransition_Insurance_Helper</class>
+            </it_insurance>
+        </helpers>
+        <models>
+            <it_insurance>
+                <class>Itransition_Insurance_Model</class>
+            </it_insurance>
+        </models>
+        <blocks>
+            <it_insurance>
+                <class>Itransition_Insurance_Block</class>
+            </it_insurance>
+            <it_insurance_admin>
+                <class>Itransition_Insurance_Block_Adminhtml</class>
+            </it_insurance_admin>
+        </blocks>
+    </global>
+</config>

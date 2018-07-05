@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <itransition module="it_insurance">
+            <label>Itransition</label>
+            <sort_order>100</sort_order>
+        </itransition>
+    </tabs>
+    <sections>
+        <insurance module="it_insurance">
+            <class>separator-top</class>
+            <label>Insurance</label>
+            <tab>itransition</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>40</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <config>
+                    <label>Configuration</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>100</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <fields>
+                        <enabled>
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enabled>
+                        <rates>
+                            <label>Insurance</label>
+                            <frontend_type>select</frontend_type>
+                            <frontend_model>it_insurance_admin/system_config_rate</frontend_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
+                        </rates>
+                    </fields>
+                </config>
+            </groups>
+        </insurance>
+    </sections>
+</config>
