@@ -1,0 +1,33 @@
+.columns #insurance_config .form-list td.value {
+    width: 50%;
+}
+
+.itSystemConfigInsurance {
+    width: 100%;
+}
+
+.itSystemConfigInsurance__titleCarrier {
+    font-weight: bold;
+}
+
+.itSystemConfigInsurance__titleShippingMethod {
+    vertical-align: middle;
+    width: 30%;
+}
+
+.form-list td.value select.itSystemConfigInsurance__select {
+    width: 40px;
+}
+
+.itSystemConfigInsurance__input {
+    width: 50px;
+}
+
+.itSystemConfigInsurance__shippingMethods td{
+    vertical-align: middle;
+    padding: 2px 7px;
+}
+
+.itSystemConfigInsurance__shippingMethods td label span {
+    padding: 0 5px 0 0;
+}

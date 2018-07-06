@@ -39,13 +39,11 @@
                             <label>Insurance</label>
                             <frontend_type>select</frontend_type>
                             <frontend_model>it_insurance_admin/system_config_rate</frontend_model>
+                            <backend_model>adminhtml/system_config_backend_serialized</backend_model>
                             <sort_order>1</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-                            <depends>
-                                <enabled>1</enabled>
-                            </depends>
                         </rates>
                     </fields>
                 </config>

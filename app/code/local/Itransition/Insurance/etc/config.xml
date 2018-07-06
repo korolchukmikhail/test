@@ -25,4 +25,13 @@
             </it_insurance_admin>
         </blocks>
     </global>
+    <adminhtml>
+        <layout>
+            <updates>
+                <insurance>
+                    <file>itransition/insurance.xml</file>
+                </insurance>
+            </updates>
+        </layout>
+    </adminhtml>
 </config>
