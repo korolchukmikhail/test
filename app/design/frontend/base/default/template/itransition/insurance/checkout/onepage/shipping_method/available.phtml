@@ -1,31 +1,6 @@
-<?php
-/**
- * Magento
- *
- * NOTICE OF LICENSE
- *
- * This source file is subject to the Academic Free License (AFL 3.0)
- * that is bundled with this package in the file LICENSE_AFL.txt.
- * It is also available through the world-wide-web at this URL:
- * http://opensource.org/licenses/afl-3.0.php
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@magento.com so we can send you a copy immediately.
- *
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Magento to newer
- * versions in the future. If you wish to customize Magento for your
- * needs please refer to http://www.magento.com for more information.
- *
- * @category    design
- * @package     base_default
- * @copyright   Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
- * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
- */
-?>
 <?php /** @var $this Mage_Checkout_Block_Onepage_Shipping_Method_Available */ ?>
 <?php $_shippingRateGroups = $this->getShippingRates(); ?>
+<?php $_insurance = Mage::getModel('it_insurance/shipping')->getRates(); ?>
 <?php if (!$_shippingRateGroups): ?>
     <p><?php echo $this->__('Sorry, no quotes are available for this order at this time.') ?></p>
 <?php else: ?>
@@ -63,6 +38,19 @@
                                         (<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
                                     <?php endif; ?>
                                 </label>
+
+                            <?php //Insurance ?>
+                            <?php if(isset($_insurance[$_rate->getCode()]) && $_insurance[$_rate->getCode()]['state']):?>
+                                <div id="insuranceForShipping__<?php echo $_rate->getCode() ?>" class="insuranceForShipping <?php echo ($_rate->getCode()===$this->getAddressShippingMethod()||$_sole)?'':'insuranceForShipping-hidden' ?>">
+                                    <?php $_insurance_method_price = ($_insurance[$_rate->getCode()]['percent']?($_rate->getPrice()*($_insurance[$_rate->getCode()]['rate']/100)):$_insurance[$_rate->getCode()]['rate']);
+                                    $insurance_method_price = $this->getQuote()->getStore()->convertPrice($_insurance_method_price, true)?>
+                                    <label><span><?php echo $this->__('Include the insurance?')?>(<span>+<?php echo $insurance_method_price ?></span>)</span>
+                                        <input class="insuranceForShipping__checkbox"
+                                               type="checkbox"
+                                               name="shipping_method_insurance"
+                                            <?php if (($_rate->getCode() === $this->getAddressShippingMethod() || $_sole) && (float)$this->getQuote()->getShippingAddress()->getInsurance() > 0) echo 'checked' ?> value="<?php echo $_insurance_method_price?>"></label>
+                                </div>
+                            <?php endif; ?>
                             <?php endif ?>
                         </li>
                     <?php endforeach; ?>
@@ -78,15 +66,26 @@
 
         $$('input[type="radio"][name="shipping_method"]').each(function(el){
             Event.observe(el, 'click', function(){
-                if (el.checked == true) {
-                    var getShippingCode = el.getValue();
+                var getShippingCode = el.getValue();
+                $$('input.insuranceForShipping__checkbox').each(function(ell){
+                    ell.checked = false;
+                });
+                $$('div.insuranceForShipping').each(function (ell) {
+                    ell.addClassName('insuranceForShipping-hidden');
+                });
+
+                if (el.checked === true) {
+                    if($('insuranceForShipping__' + getShippingCode)){
+                        $('insuranceForShipping__' + getShippingCode).removeClassName('insuranceForShipping-hidden');
+                    }
+
                     <?php if (!empty($shippingCodePrice)): ?>
                     var newPrice = shippingCodePrice[getShippingCode];
                     if (!lastPrice) {
                         lastPrice = newPrice;
                         quoteBaseGrandTotal += newPrice;
                     }
-                    if (newPrice != lastPrice) {
+                    if (newPrice !== lastPrice) {
                         quoteBaseGrandTotal += (newPrice-lastPrice);
                         lastPrice = newPrice;
                     }

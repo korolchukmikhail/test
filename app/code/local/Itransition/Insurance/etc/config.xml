@@ -24,14 +24,62 @@
                 <class>Itransition_Insurance_Block_Adminhtml</class>
             </it_insurance_admin>
         </blocks>
+        <events>
+            <checkout_controller_onepage_save_shipping_method>
+                <observers>
+                    <insurance_to_address>
+                        <class>it_insurance/observer</class>
+                        <method>setInsurance</method>
+                    </insurance_to_address>
+                </observers>
+            </checkout_controller_onepage_save_shipping_method>
+            <checkout_controller_multishipping_shipping_post>
+                <observers>
+                    <insurance_to_address_multi>
+                        <class>it_insurance/observer</class>
+                        <method>setMultiShippingInsurance</method>
+                    </insurance_to_address_multi>
+                </observers>
+            </checkout_controller_multishipping_shipping_post>
+        </events>
+        <resources>
+            <insurance_setup>
+                <setup>
+                    <module>Itransition_Insurance</module>
+                    <class>Mage_Customer_Model_Entity_Setup</class>
+                </setup>
+            </insurance_setup>
+        </resources>
+        <fieldsets>
+            <sales_convert_quote_address>
+                <insurance>
+                    <to_order_address>*</to_order_address>
+                    <to_customer_address>*</to_customer_address>
+                </insurance>
+            </sales_convert_quote_address>
+            <customer_address>
+                <insurance>
+                    <to_quote_address>*</to_quote_address>
+                </insurance>
+            </customer_address>
+        </fieldsets>
     </global>
     <adminhtml>
         <layout>
             <updates>
-                <insurance>
+                <insurance_admin>
                     <file>itransition/insurance.xml</file>
-                </insurance>
+                </insurance_admin>
             </updates>
         </layout>
     </adminhtml>
+    <frontend>
+        <layout>
+            <updates>
+                <insurance_front>
+                    <file>itransition/insurance.xml</file>
+                </insurance_front>
+            </updates>
+        </layout>
+    </frontend>
 </config>
