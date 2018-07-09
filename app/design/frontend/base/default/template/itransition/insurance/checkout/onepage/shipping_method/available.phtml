@@ -48,7 +48,8 @@
                                         <input class="insuranceForShipping__checkbox"
                                                type="checkbox"
                                                name="shipping_method_insurance"
-                                            <?php if (($_rate->getCode() === $this->getAddressShippingMethod() || $_sole) && (float)$this->getQuote()->getShippingAddress()->getInsurance() > 0) echo 'checked' ?> value="<?php echo $_insurance_method_price?>"></label>
+                                               <?php if (($_rate->getCode() === $this->getAddressShippingMethod() || $_sole) && (float)$this->getQuote()->getShippingAddress()->getInsurance() > 0) echo 'checked' ?>
+                                               value="<?php echo $_insurance_method_price?>"></label>
                                 </div>
                             <?php endif; ?>
                             <?php endif ?>

@@ -9,7 +9,7 @@ $installer = $this;
 
 $installer->startSetup();
 
-/*$this->addAttribute('customer_address', 'insurance', array(
+$this->addAttribute('customer_address', 'insurance', array(
     'type' => 'decimal',
     'input' => 'text',
     'label' => 'Insurance',
@@ -18,7 +18,7 @@ $installer->startSetup();
     'required' => 0,
     'user_defined' => 1,
     'visible_on_front' => 1
-));*/
+));
 
 $table = $this->getTable('sales/quote_address');
 $installer->run("ALTER TABLE  $table ADD  `insurance` decimal(12,4) NOT NULL DEFAULT 0");

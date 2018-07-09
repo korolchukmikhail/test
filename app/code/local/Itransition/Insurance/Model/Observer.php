@@ -8,6 +8,18 @@
 
 class Itransition_Insurance_Model_Observer {
 
+    public function unsInsuranceInBilling($observer) {
+        $target = $observer->getTarget();
+        if($target && $target->getAddressType() && $target->getAddressType() == 'billing'){
+            /**
+             * Unset new field in billing address for fix null value on OPC with single shipping address
+             * This filed is set to NULL
+             * app/code/core/Mage/Checkout/Model/Type/Onepage.php 352 line
+             */
+            $target->unsetData('insurance');
+        }
+    }
+
     public function setInsurance($observer) {
         $quote = $observer->getQuote();
         $request = $observer->getRequest();
