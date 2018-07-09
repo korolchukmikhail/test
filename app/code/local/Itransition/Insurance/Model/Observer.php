@@ -20,6 +20,22 @@ class Itransition_Insurance_Model_Observer {
         }
     }
 
+    public function setInsuranceToShippingAddress($observer) {
+        $address = $observer->getQuoteAddress();
+        if($address->getAddressType() == 'shipping'){
+            $request = Mage::app()->getRequest();
+
+            //For cart page, update estimate
+            if($insurance = $request->get('shipping_method_insurance')){
+                $address->setInsurance($insurance);
+                $address->setBaseInsurance($insurance);
+            }else{
+                $address->setInsurance(0);
+                $address->setBaseInsurance(0);
+            }
+        }
+    }
+
     public function setInsurance($observer) {
         $quote = $observer->getQuote();
         $request = $observer->getRequest();

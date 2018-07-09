@@ -132,7 +132,7 @@
                     $('postcode').addClassName('required-entry');
                 }
                 return VarienForm.prototype.submit.bind(coShippingMethodForm)();
-            }
+            };
 
             $$('input[type="radio"][name="estimate_method"]').each(function(el){
                 Event.observe(el, 'click', function(){
@@ -148,7 +148,6 @@
                         if($('insuranceForShipping__' + getShippingCode)){
                             $('insuranceForShipping__' + getShippingCode).removeClassName('insuranceForShipping-hidden');
                         }
-                        return false;
                     }
                 });
             });

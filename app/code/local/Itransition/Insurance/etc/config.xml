@@ -11,11 +11,13 @@
                 <class>Itransition_Insurance_Helper</class>
             </it_insurance>
         </helpers>
+
         <models>
             <it_insurance>
                 <class>Itransition_Insurance_Model</class>
             </it_insurance>
         </models>
+
         <blocks>
             <it_insurance>
                 <class>Itransition_Insurance_Block</class>
@@ -23,7 +25,46 @@
             <it_insurance_admin>
                 <class>Itransition_Insurance_Block_Adminhtml</class>
             </it_insurance_admin>
+
+            <adminhtml>
+                <rewrite>
+                    <sales_order_totals>Itransition_Insurance_Block_Adminhtml_Sales_Order_Totals</sales_order_totals>
+                    <sales_order_invoice_totals>Itransition_Insurance_Block_Adminhtml_Sales_Order_Invoice_Totals</sales_order_invoice_totals>
+                    <sales_order_creditmemo_totals>Itransition_Insurance_Block_Adminhtml_Sales_Order_Creditmemo_Totals</sales_order_creditmemo_totals>
+                </rewrite>
+            </adminhtml>
+            
         </blocks>
+
+        <sales>
+            <quote>
+                <totals>
+                    <insurance>
+                        <class>Itransition_Insurance_Model_Sales_Quote</class>
+                        <after>subtotal,tax</after>
+                    </insurance>
+                </totals>
+            </quote>
+
+            <order_invoice>
+                <totals>
+                    <insurance>
+                        <class>Itransition_Insurance_Model_Sales_Invoice</class>
+                        <after>subtotal</after>
+                    </insurance>
+                </totals>
+            </order_invoice>
+
+            <order_creditmemo>
+                <totals>
+                    <insurance>
+                        <class>Itransition_Insurance_Model_Sales_Creditmemo</class>
+                        <after>subtotal</after>
+                    </insurance>
+                </totals>
+            </order_creditmemo>
+        </sales>
+        
         <events>
             <checkout_controller_onepage_save_shipping_method>
                 <observers>
@@ -49,7 +90,16 @@
                     </unset_insurance_in_billing_address>
                 </observers>
             </core_copy_fieldset_customer_address_to_quote_address>
+            <sales_quote_address_save_before>
+                <observers>
+                    <set_insurance_to_address>
+                        <class>it_insurance/observer</class>
+                        <method>setInsuranceToShippingAddress</method>
+                    </set_insurance_to_address>
+                </observers>
+            </sales_quote_address_save_before>
         </events>
+
         <resources>
             <insurance_setup>
                 <setup>
@@ -58,6 +108,7 @@
                 </setup>
             </insurance_setup>
         </resources>
+
         <fieldsets>
             <customer_address>
                 <insurance>
@@ -67,7 +118,6 @@
             <sales_convert_quote_address>
                 <insurance>
                     <to_order_address>*</to_order_address>
-                    <to_customer_address>*</to_customer_address>
                 </insurance>
             </sales_convert_quote_address>
             <sales_convert_order_address>
@@ -77,6 +127,7 @@
             </sales_convert_order_address>
         </fieldsets>
     </global>
+
     <adminhtml>
         <layout>
             <updates>
@@ -86,6 +137,7 @@
             </updates>
         </layout>
     </adminhtml>
+
     <frontend>
         <layout>
             <updates>
