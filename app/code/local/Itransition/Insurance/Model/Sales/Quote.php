@@ -22,10 +22,10 @@ class Itransition_Insurance_Model_Sales_Quote extends Mage_Sales_Model_Quote_Add
             return $this;
         }
 
-        $amount = $address->getInsurance();
+        $amount = $address->getBaseInsurance();
 
         if ((float)$amount > 0) {
-            $address->setInsuranceAmount($amount);
+            $address->setInsuranceAmount($address->getQuote()->getStore()->convertPrice($amount, false));
             $address->setBaseInsuranceAmount($amount);
 
             $address->setGrandTotal($address->getGrandTotal() + $address->getInsuranceAmount());
@@ -37,13 +37,14 @@ class Itransition_Insurance_Model_Sales_Quote extends Mage_Sales_Model_Quote_Add
 
     public function fetch(Mage_Sales_Model_Quote_Address $address) {
         if (($address->getAddressType() == 'shipping')) {
-            $amount = $address->getInsurance();
+            $amount = $address->getBaseInsurance();
 
             if ((float)$amount > 0) {
                 $address->addTotal(array(
                     'code' => $this->getCode(),
                     'title' => $this->getLabel(),
-                    'value' => $amount
+                    'base_value' => $amount,
+                    'value' => $address->getQuote()->getStore()->convertPrice($amount, false)
                 ));
             }
         }

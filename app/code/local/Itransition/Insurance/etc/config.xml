@@ -110,20 +110,21 @@
         </resources>
 
         <fieldsets>
-            <customer_address>
-                <insurance>
-                    <to_quote_address>*</to_quote_address>
-                </insurance>
-            </customer_address>
             <sales_convert_quote_address>
                 <insurance>
                     <to_order_address>*</to_order_address>
                 </insurance>
+                <base_insurance>
+                    <to_order_address>*</to_order_address>
+                </base_insurance>
             </sales_convert_quote_address>
             <sales_convert_order_address>
                 <insurance>
                     <to_quote_address>*</to_quote_address>
                 </insurance>
+                <base_insurance>
+                    <to_quote_address>*</to_quote_address>
+                </base_insurance>
             </sales_convert_order_address>
         </fieldsets>
     </global>
