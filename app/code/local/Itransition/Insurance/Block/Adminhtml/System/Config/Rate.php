@@ -42,7 +42,7 @@ class Itransition_Insurance_Block_Adminhtml_System_Config_Rate extends Mage_Admi
                 $row .= '<td><label><span>' . Mage::helper('adminhtml')->__('Enabled') . '</span><select name="' . $this->getElement()->getName() . '[state][]" class="itSystemConfigInsurance__select">';
                 $row .= '<option value="0" ' . ($this->_getValue($method['value'], 'state') ? '' : 'selected') . '>' . Mage::helper('adminhtml')->__('No') . '</option>';
                 $row .= '<option value="1" ' . ($this->_getValue($method['value'], 'state') ? 'selected' : '') . '>' . Mage::helper('adminhtml')->__('Yes') . '</option></select></label></td>';
-                $row .= '<td><label><span>' . Mage::helper('adminhtml')->__('Percent?') . '</span><select name="' . $this->getElement()->getName() . '[percent][]" class="itSystemConfigInsurance__select">';
+                $row .= '<td><label><span>' . Mage::helper('adminhtml')->__('Percent?') . '</span><select name="' . $this->getElement()->getName() . '[percent][]" class="itSystemConfigInsurance__select itSystemConfigInsurance__select-percent">';
                 $row .= '<option value="0" ' . ($this->_getValue($method['value'], 'percent') ? '' : 'selected') . '>' . Mage::helper('adminhtml')->__('No') . '</option>';
                 $row .= '<option value="1" ' . ($this->_getValue($method['value'], 'percent') ? 'selected' : '') . '>' . Mage::helper('adminhtml')->__('Yes') . '</option></select></label></td>';
                 $row .= '<td><label><span>' . Mage::helper('adminhtml')->__('Rate');

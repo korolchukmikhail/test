@@ -94,7 +94,7 @@
                 <observers>
                     <set_insurance_to_address>
                         <class>it_insurance/observer</class>
-                        <method>setInsuranceToShippingAddress</method>
+                        <method>setInsuranceEstimate</method>
                     </set_insurance_to_address>
                 </observers>
             </sales_quote_address_save_before>

@@ -1,3 +1,20 @@
 .insuranceForShipping-hidden {
     display: none;
 }
+
+#co-shipping-method-form .sp-methods dd .insuranceForShipping label {
+    font-size: 12px;
+    line-height: 12px;
+    padding: 7px 5px;
+    float: unset;
+}
+
+.insuranceForShipping label input[type=checkbox] {
+    width: 12px;
+    height: 12px;
+    display: block;
+    float: left;
+    margin-right: 12px;
+    margin-top: -1px;
+    margin-left: 10px;
+}

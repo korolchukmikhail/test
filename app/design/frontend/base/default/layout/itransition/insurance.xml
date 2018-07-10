@@ -2,28 +2,43 @@
 <layout version="0.1.0">
     <checkout_onepage_index>
         <reference name="head">
-            <action method="addCss"><name>css/itransition/insurance.css</name></action>
+            <action method="addCss">
+                <name>css/itransition/insurance.css</name>
+            </action>
         </reference>
     </checkout_onepage_index>
+
     <checkout_onepage_shippingmethod>
         <reference name="root">
-            <action method="setTemplate"><template>itransition/insurance/checkout/onepage/shipping_method/available.phtml</template></action>
+            <action method="setTemplate">
+                <template>itransition/insurance/checkout/onepage/shipping_method/available.phtml</template>
+            </action>
         </reference>
     </checkout_onepage_shippingmethod>
+
     <checkout_multishipping_shipping>
         <reference name="head">
-            <action method="addCss"><name>css/itransition/insurance.css</name></action>
+            <action method="addCss">
+                <name>css/itransition/insurance.css</name>
+            </action>
         </reference>
         <reference name="checkout_shipping">
-            <action method="setTemplate"><template>itransition/insurance/checkout/multishipping/shipping.phtml</template></action>
+            <action method="setTemplate">
+                <template>itransition/insurance/checkout/multishipping/shipping.phtml</template>
+            </action>
         </reference>
     </checkout_multishipping_shipping>
+
     <checkout_cart_index>
         <reference name="head">
-            <action method="addCss"><name>css/itransition/insurance.css</name></action>
+            <action method="addCss">
+                <name>css/itransition/insurance.css</name>
+            </action>
         </reference>
         <reference name="checkout.cart.shipping">
-            <action method="setTemplate"><template>itransition/insurance/checkout/cart/shipping.phtml</template></action>
+            <action method="setTemplate">
+                <template>itransition/insurance/checkout/cart/shipping.phtml</template>
+            </action>
         </reference>
     </checkout_cart_index>
 </layout>

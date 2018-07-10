@@ -88,7 +88,7 @@
                                             <div id="insuranceForShipping__<?php echo $_rate->getCode() ?>" class="insuranceForShipping <?php echo ($_rate->getCode()===$this->getAddressShippingMethod())?'':'insuranceForShipping-hidden' ?>">
                                                 <?php $_insurance_method_price = ($_insurance[$_rate->getCode()]['percent']?($_rate->getPrice()*($_insurance[$_rate->getCode()]['rate']/100)):$_insurance[$_rate->getCode()]['rate']);
                                                 $insurance_method_price = $this->getQuote()->getStore()->convertPrice($_insurance_method_price, true)?>
-                                                <label><span><?php echo $this->__('Include the insurance?')?>(<span>+<?php echo $insurance_method_price ?></span>)</span>
+                                                <label><span><?php echo $this->__('Insurance')?>&nbsp;<span>+<?php echo $insurance_method_price ?></span></span>
                                                     <input class="insuranceForShipping__checkbox"
                                                            type="checkbox"
                                                            name="shipping_method_insurance"

@@ -23,9 +23,15 @@
     width: 50px;
 }
 
+.itSystemConfigInsurance__shippingMethods {
+    margin-bottom: 30px;
+    border-spacing: 0;
+}
+
 .itSystemConfigInsurance__shippingMethods td{
     vertical-align: middle;
     padding: 2px 7px;
+    border-bottom: 1px solid #ccc;
 }
 
 .itSystemConfigInsurance__shippingMethods td label span {
