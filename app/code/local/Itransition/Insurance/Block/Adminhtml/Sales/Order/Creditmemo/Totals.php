@@ -14,6 +14,10 @@ class Itransition_Insurance_Block_Adminhtml_Sales_Order_Creditmemo_Totals extend
      */
     protected function _initTotals() {
         parent::_initTotals();
+        if(!Mage::helper('it_insurance')->isEnabled()){
+            return $this;
+        }
+
         $address = $this->getSource()->getShippingAddress();
         if ($address->getBaseInsurance()) {
             $this->addTotalBefore(

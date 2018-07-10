@@ -18,6 +18,10 @@ class Itransition_Insurance_Model_Sales_Quote extends Mage_Sales_Model_Quote_Add
 
     public function collect(Mage_Sales_Model_Quote_Address $address) {
         parent::collect($address);
+        if(!Mage::helper('it_insurance')->isEnabled()){
+            return $this;
+        }
+
         if (($address->getAddressType() == 'billing')) {
             return $this;
         }
@@ -36,6 +40,10 @@ class Itransition_Insurance_Model_Sales_Quote extends Mage_Sales_Model_Quote_Add
     }
 
     public function fetch(Mage_Sales_Model_Quote_Address $address) {
+        if(!Mage::helper('it_insurance')->isEnabled()){
+            return $this;
+        }
+
         if (($address->getAddressType() == 'shipping')) {
             $amount = $address->getBaseInsurance();
 

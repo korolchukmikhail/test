@@ -9,6 +9,10 @@
 class Itransition_Insurance_Model_Observer {
 
     public function unsInsuranceInBilling($observer) {
+        if(!Mage::helper('it_insurance')->isEnabled()){
+            return $this;
+        }
+
         $target = $observer->getTarget();
         if($target && $target->getAddressType() && $target->getAddressType() == 'billing'){
             /**
@@ -21,6 +25,10 @@ class Itransition_Insurance_Model_Observer {
     }
 
     public function setInsuranceEstimate($observer) {
+        if(!Mage::helper('it_insurance')->isEnabled()){
+            return $this;
+        }
+
         //For cart page, update estimate
         $address = $observer->getQuoteAddress();
         $request = Mage::app()->getRequest();
@@ -37,6 +45,10 @@ class Itransition_Insurance_Model_Observer {
     }
 
     public function setInsurance($observer) {
+        if(!Mage::helper('it_insurance')->isEnabled()){
+            return $this;
+        }
+
         $quote = $observer->getQuote();
         $request = $observer->getRequest();
         $address = $quote->getShippingAddress();
@@ -51,6 +63,10 @@ class Itransition_Insurance_Model_Observer {
     }
 
     public function setMultiShippingInsurance($observer) {
+        if(!Mage::helper('it_insurance')->isEnabled()){
+            return $this;
+        }
+
         $quote = $observer->getQuote();
         $request = $observer->getRequest();
         $addresses = $quote->getAllShippingAddresses();
