@@ -1,20 +1,16 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: m.korolchuk
- * Date: 9.7.18
- * Time: 14.15
- */
 
-class Itransition_Insurance_Block_Adminhtml_Sales_Order_Creditmemo_Totals extends Mage_Adminhtml_Block_Sales_Order_Creditmemo_Totals {
+class Itransition_Insurance_Block_Adminhtml_Sales_Order_Creditmemo_Totals extends Mage_Adminhtml_Block_Sales_Order_Creditmemo_Totals
+{
     /**
      * Initialize order totals array
      *
      * @return Mage_Sales_Block_Order_Totals
      */
-    protected function _initTotals() {
+    protected function _initTotals()
+    {
         parent::_initTotals();
-        if(!Mage::helper('it_insurance')->isEnabled()){
+        if (!Mage::helper('it_insurance')->isEnabled()) {
             return $this;
         }
 

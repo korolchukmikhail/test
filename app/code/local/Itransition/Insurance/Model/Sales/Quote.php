@@ -1,24 +1,22 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: m.korolchuk
- * Date: 9.7.18
- * Time: 14.23
- */
 
-class Itransition_Insurance_Model_Sales_Quote extends Mage_Sales_Model_Quote_Address_Total_Abstract {
+class Itransition_Insurance_Model_Sales_Quote extends Mage_Sales_Model_Quote_Address_Total_Abstract
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->setCode('insurance');
     }
 
-    public function getLabel() {
+    public function getLabel()
+    {
         return Mage::helper('it_insurance')->__('Insurance');
     }
 
-    public function collect(Mage_Sales_Model_Quote_Address $address) {
+    public function collect(Mage_Sales_Model_Quote_Address $address)
+    {
         parent::collect($address);
-        if(!Mage::helper('it_insurance')->isEnabled()){
+        if (!Mage::helper('it_insurance')->isEnabled()) {
             return $this;
         }
 
@@ -39,8 +37,9 @@ class Itransition_Insurance_Model_Sales_Quote extends Mage_Sales_Model_Quote_Add
         return $this;
     }
 
-    public function fetch(Mage_Sales_Model_Quote_Address $address) {
-        if(!Mage::helper('it_insurance')->isEnabled()){
+    public function fetch(Mage_Sales_Model_Quote_Address $address)
+    {
+        if (!Mage::helper('it_insurance')->isEnabled()) {
             return $this;
         }
 
@@ -48,12 +47,12 @@ class Itransition_Insurance_Model_Sales_Quote extends Mage_Sales_Model_Quote_Add
             $amount = $address->getBaseInsurance();
 
             if ((float)$amount > 0) {
-                $address->addTotal(array(
+                $address->addTotal([
                     'code' => $this->getCode(),
                     'title' => $this->getLabel(),
                     'base_value' => $amount,
-                    'value' => $address->getQuote()->getStore()->convertPrice($amount, false)
-                ));
+                    'value' => $address->getQuote()->getStore()->convertPrice($amount, false),
+                ]);
             }
         }
 

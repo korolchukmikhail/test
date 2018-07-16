@@ -1,14 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: m.korolchuk
- * Date: 5.7.18
- * Time: 18.45
- */
 
-class Itransition_Insurance_Model_Shipping extends Mage_Core_Model_Abstract {
+class Itransition_Insurance_Model_Shipping extends Mage_Core_Model_Abstract
+{
 
-    public function getCarriers() {
+    public function getCarriers()
+    {
         $methods = Mage::getSingleton('shipping/config')->getActiveCarriers();
 
         $options = [];
@@ -31,7 +27,8 @@ class Itransition_Insurance_Model_Shipping extends Mage_Core_Model_Abstract {
         return $options;
     }
 
-    public function getRates() {
+    public function getRates()
+    {
         $rates = [];
         if ($rates_source = Mage::getStoreConfig('insurance/config/rates')) {
             $rates_source = unserialize($rates_source);
@@ -39,7 +36,7 @@ class Itransition_Insurance_Model_Shipping extends Mage_Core_Model_Abstract {
                 $rates[$method_code] = [
                     'state' => (int)$rates_source['state'][$i],
                     'percent' => (int)$rates_source['percent'][$i],
-                    'rate' => (float)$rates_source['rate'][$i]
+                    'rate' => (float)$rates_source['rate'][$i],
                 ];
             }
         }

@@ -1,19 +1,16 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: m.korolchuk
- * Date: 5.7.18
- * Time: 18.32
- */
 
-class Itransition_Insurance_Block_Adminhtml_System_Config_Rate extends Mage_Adminhtml_Block_System_Config_Form_Field {
+class Itransition_Insurance_Block_Adminhtml_System_Config_Rate extends Mage_Adminhtml_Block_System_Config_Form_Field
+{
     protected $_rates = [];
 
     /**
      * @param Varien_Data_Form_Element_Abstract $element
+     *
      * @return string
      */
-    protected function _getElementHtml(Varien_Data_Form_Element_Abstract $element) {
+    protected function _getElementHtml(Varien_Data_Form_Element_Abstract $element)
+    {
         $this->setElement($element);
 
         /** @var Itransition_Insurance_Model_Shipping $shipping * */
@@ -30,7 +27,8 @@ class Itransition_Insurance_Block_Adminhtml_System_Config_Rate extends Mage_Admi
         return $html;
     }
 
-    private function _getMethods($carrier) {
+    private function _getMethods($carrier)
+    {
         $row = '';
         if (!empty($carrier['value'])) {
             $row = '<div class="itSystemConfigInsurance__row">';
@@ -56,7 +54,8 @@ class Itransition_Insurance_Block_Adminhtml_System_Config_Rate extends Mage_Admi
         return $row;
     }
 
-    private function _getValue($method_code, $field) {
+    private function _getValue($method_code, $field)
+    {
         if ($this->_rates && isset($this->_rates[$method_code]) && isset($this->_rates[$method_code][$field])) {
             return $this->_rates[$method_code][$field];
         }

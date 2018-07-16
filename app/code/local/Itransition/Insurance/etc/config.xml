@@ -33,7 +33,7 @@
                     <sales_order_creditmemo_totals>Itransition_Insurance_Block_Adminhtml_Sales_Order_Creditmemo_Totals</sales_order_creditmemo_totals>
                 </rewrite>
             </adminhtml>
-            
+
         </blocks>
 
         <sales>
@@ -64,7 +64,7 @@
                 </totals>
             </order_creditmemo>
         </sales>
-        
+
         <events>
             <checkout_controller_onepage_save_shipping_method>
                 <observers>

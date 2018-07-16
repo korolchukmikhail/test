@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: m.korolchuk
- * Date: 6.7.18
- * Time: 17.56
- */
+
 $installer = $this;
 
 $installer->startSetup();

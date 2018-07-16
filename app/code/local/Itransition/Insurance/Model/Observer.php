@@ -1,20 +1,16 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: m.korolchuk
- * Date: 6.7.18
- * Time: 15.09
- */
 
-class Itransition_Insurance_Model_Observer {
+class Itransition_Insurance_Model_Observer
+{
 
-    public function unsInsuranceInBilling($observer) {
-        if(!Mage::helper('it_insurance')->isEnabled()){
+    public function unsInsuranceInBilling($observer)
+    {
+        if (!Mage::helper('it_insurance')->isEnabled()) {
             return $this;
         }
 
         $target = $observer->getTarget();
-        if($target && $target->getAddressType() && $target->getAddressType() == 'billing'){
+        if ($target && $target->getAddressType() && $target->getAddressType() == 'billing') {
             /**
              * Unset new field in billing address for fix null value on OPC with single shipping address
              * This filed is set to NULL
@@ -24,8 +20,9 @@ class Itransition_Insurance_Model_Observer {
         }
     }
 
-    public function setInsuranceEstimate($observer) {
-        if(!Mage::helper('it_insurance')->isEnabled()){
+    public function setInsuranceEstimate($observer)
+    {
+        if (!Mage::helper('it_insurance')->isEnabled()) {
             return $this;
         }
 
@@ -33,19 +30,20 @@ class Itransition_Insurance_Model_Observer {
         $address = $observer->getQuoteAddress();
         $request = Mage::app()->getRequest();
 
-        if( $request->getActionName() == 'estimateUpdatePost' && $address->getAddressType() == 'shipping') {
-            if($insurance = $request->get('shipping_method_insurance')){
+        if ($request->getActionName() == 'estimateUpdatePost' && $address->getAddressType() == 'shipping') {
+            if ($insurance = $request->get('shipping_method_insurance')) {
                 $address->setInsurance(Mage::app()->getStore()->convertPrice($insurance, false));
                 $address->setBaseInsurance($insurance);
-            }else{
+            } else {
                 $address->setInsurance(0);
                 $address->setBaseInsurance(0);
             }
         }
     }
 
-    public function setInsurance($observer) {
-        if(!Mage::helper('it_insurance')->isEnabled()){
+    public function setInsurance($observer)
+    {
+        if (!Mage::helper('it_insurance')->isEnabled()) {
             return $this;
         }
 
@@ -56,14 +54,15 @@ class Itransition_Insurance_Model_Observer {
         if ($insurance = $request->getPost('shipping_method_insurance')) {
             $address->setInsurance(Mage::app()->getStore()->convertPrice($insurance, false));
             $address->setBaseInsurance($insurance);
-        }else{
+        } else {
             $address->setInsurance(0);
             $address->setBaseInsurance(0);
         }
     }
 
-    public function setMultiShippingInsurance($observer) {
-        if(!Mage::helper('it_insurance')->isEnabled()){
+    public function setMultiShippingInsurance($observer)
+    {
+        if (!Mage::helper('it_insurance')->isEnabled()) {
             return $this;
         }
 
@@ -75,7 +74,7 @@ class Itransition_Insurance_Model_Observer {
             if ($insurance = $request->getPost('shipping_method_insurance__' . $address->getId())) {
                 $address->setInsurance(Mage::app()->getStore()->convertPrice($insurance, false));
                 $address->setBaseInsurance($insurance);
-            }else{
+            } else {
                 $address->setInsurance(0);
                 $address->setBaseInsurance(0);
             }

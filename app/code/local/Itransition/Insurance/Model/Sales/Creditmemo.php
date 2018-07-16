@@ -1,15 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: m.korolchuk
- * Date: 9.7.18
- * Time: 14.24
- */
 
-class Itransition_Insurance_Model_Sales_Creditmemo extends Mage_Sales_Model_Order_Creditmemo_Total_Abstract {
+class Itransition_Insurance_Model_Sales_Creditmemo extends Mage_Sales_Model_Order_Creditmemo_Total_Abstract
+{
 
-    public function collect(Mage_Sales_Model_Order_Creditmemo $creditmemo) {
-        if(!Mage::helper('it_insurance')->isEnabled()){
+    public function collect(Mage_Sales_Model_Order_Creditmemo $creditmemo)
+    {
+        if (!Mage::helper('it_insurance')->isEnabled()) {
             return $this;
         }
 
