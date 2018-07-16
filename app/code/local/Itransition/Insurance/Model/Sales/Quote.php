@@ -2,21 +2,24 @@
 
 class Itransition_Insurance_Model_Sales_Quote extends Mage_Sales_Model_Quote_Address_Total_Abstract
 {
+    /** @var Itransition_Insurance_Helper_Data $_helper * */
+    protected $_helper;
 
     public function __construct()
     {
         $this->setCode('insurance');
+        $this->_helper = Mage::helper('itransition_insurance');
     }
 
     public function getLabel()
     {
-        return Mage::helper('it_insurance')->__('Insurance');
+        return $this->_helper->__('Insurance');
     }
 
     public function collect(Mage_Sales_Model_Quote_Address $address)
     {
         parent::collect($address);
-        if (!Mage::helper('it_insurance')->isEnabled()) {
+        if (!$this->_helper->isEnabled()) {
             return $this;
         }
 
@@ -39,7 +42,7 @@ class Itransition_Insurance_Model_Sales_Quote extends Mage_Sales_Model_Quote_Add
 
     public function fetch(Mage_Sales_Model_Quote_Address $address)
     {
-        if (!Mage::helper('it_insurance')->isEnabled()) {
+        if (!$this->_helper->isEnabled()) {
             return $this;
         }
 

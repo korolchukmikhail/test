@@ -2,15 +2,24 @@
 
 class Itransition_Insurance_Model_Observer
 {
+    /** @var Itransition_Insurance_Helper_Data $_helper * */
+    protected $_helper;
+    const ACTION_NAME_ESTIMATE = 'estimateUpdatePost';
+    const REQUEST_PARAM_NAME = 'shipping_method_insurance';
 
-    public function unsInsuranceInBilling($observer)
+    public function __construct()
     {
-        if (!Mage::helper('it_insurance')->isEnabled()) {
+        $this->_helper = Mage::helper('itransition_insurance');
+    }
+
+    public function unsInsuranceInBilling(Varien_Event_Observer $observer)
+    {
+        if (!$this->_helper->isEnabled()) {
             return $this;
         }
 
         $target = $observer->getTarget();
-        if ($target && $target->getAddressType() && $target->getAddressType() == 'billing') {
+        if ($target && $target->getAddressType() == Mage_Customer_Model_Address::TYPE_BILLING) {
             /**
              * Unset new field in billing address for fix null value on OPC with single shipping address
              * This filed is set to NULL
@@ -18,66 +27,80 @@ class Itransition_Insurance_Model_Observer
              */
             $target->unsetData('insurance');
         }
+
+        return $this;
     }
 
-    public function setInsuranceEstimate($observer)
+    public function setInsuranceEstimate(Varien_Event_Observer $observer)
     {
-        if (!Mage::helper('it_insurance')->isEnabled()) {
+        if (!$this->_helper->isEnabled()) {
             return $this;
         }
 
-        //For cart page, update estimate
-        $address = $observer->getQuoteAddress();
-        $request = Mage::app()->getRequest();
+        try {
+            //For cart page, update estimate
+            $address = $observer->getQuoteAddress();
+            $request = $this->getRequest($observer);
 
-        if ($request->getActionName() == 'estimateUpdatePost' && $address->getAddressType() == 'shipping') {
-            if ($insurance = $request->get('shipping_method_insurance')) {
-                $address->setInsurance(Mage::app()->getStore()->convertPrice($insurance, false));
-                $address->setBaseInsurance($insurance);
-            } else {
-                $address->setInsurance(0);
-                $address->setBaseInsurance(0);
+            if ($request->getActionName() == self::ACTION_NAME_ESTIMATE
+                && $address->getAddressType() == Mage_Customer_Model_Address::TYPE_SHIPPING) {
+                $insurance = $request->get(self::REQUEST_PARAM_NAME, 0);
+                $this->_helper->setInsuranceToAddress($address, $insurance);
             }
+        } catch (Exception $e) {
+            Mage::logException($e);
         }
+
+        return $this;
     }
 
-    public function setInsurance($observer)
+    public function setInsurance(Varien_Event_Observer $observer)
     {
-        if (!Mage::helper('it_insurance')->isEnabled()) {
+        if (!$this->_helper->isEnabled()) {
             return $this;
         }
 
-        $quote = $observer->getQuote();
-        $request = $observer->getRequest();
-        $address = $quote->getShippingAddress();
+        try {
+            $request = $this->getRequest($observer);
+            $address = $observer->getQuote()->getShippingAddress();
 
-        if ($insurance = $request->getPost('shipping_method_insurance')) {
-            $address->setInsurance(Mage::app()->getStore()->convertPrice($insurance, false));
-            $address->setBaseInsurance($insurance);
-        } else {
-            $address->setInsurance(0);
-            $address->setBaseInsurance(0);
+            $insurance = $request->getPost(self::REQUEST_PARAM_NAME, 0);
+            $this->_helper->setInsuranceToAddress($address, $insurance);
+        } catch (Exception $e) {
+            Mage::logException($e);
         }
+
+        return $this;
     }
 
-    public function setMultiShippingInsurance($observer)
+    public function setMultiShippingInsurance(Varien_Event_Observer $observer)
     {
-        if (!Mage::helper('it_insurance')->isEnabled()) {
+        if (!$this->_helper->isEnabled()) {
             return $this;
         }
 
-        $quote = $observer->getQuote();
-        $request = $observer->getRequest();
-        $addresses = $quote->getAllShippingAddresses();
+        try {
+            $request = $this->getRequest($observer);
+            $addresses = $observer->getQuote()->getAllShippingAddresses();
 
-        foreach ($addresses as &$address) {
-            if ($insurance = $request->getPost('shipping_method_insurance__' . $address->getId())) {
-                $address->setInsurance(Mage::app()->getStore()->convertPrice($insurance, false));
-                $address->setBaseInsurance($insurance);
-            } else {
-                $address->setInsurance(0);
-                $address->setBaseInsurance(0);
+            foreach ($addresses as $address) {
+                $insurance = $request->getPost(self::REQUEST_PARAM_NAME . '__' . $address->getId(), 0);
+                $this->_helper->setInsuranceToAddress($address, $insurance);
             }
+        } catch (Exception $e) {
+            Mage::logException($e);
         }
+
+        return $this;
+    }
+
+    protected function getRequest(Varien_Event_Observer $observer)
+    {
+        $request = $observer->getRequest();
+        if (is_null($request)) {
+            $request = Mage::app()->getRequest();
+        }
+
+        return $request;
     }
 }

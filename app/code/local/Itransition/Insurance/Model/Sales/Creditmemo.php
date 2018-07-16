@@ -5,7 +5,7 @@ class Itransition_Insurance_Model_Sales_Creditmemo extends Mage_Sales_Model_Orde
 
     public function collect(Mage_Sales_Model_Order_Creditmemo $creditmemo)
     {
-        if (!Mage::helper('it_insurance')->isEnabled()) {
+        if (!Mage::helper('itransition_insurance')->isEnabled()) {
             return $this;
         }
 

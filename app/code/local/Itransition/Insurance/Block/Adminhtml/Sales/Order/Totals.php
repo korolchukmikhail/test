@@ -2,26 +2,29 @@
 
 class Itransition_Insurance_Block_Adminhtml_Sales_Order_Totals extends Mage_Adminhtml_Block_Sales_Order_Totals
 {
+    public function __construct(array $args = [])
+    {
+        parent::__construct($args);
+    }
+
     /**
-     * Initialize order totals array
-     *
-     * @return Mage_Sales_Block_Order_Totals
+     * @inheritdoc
      */
     protected function _initTotals()
     {
         parent::_initTotals();
-        if (!Mage::helper('it_insurance')->isEnabled()) {
+        if (!Mage::helper('itransition_insurance')->isEnabled()) {
             return $this;
         }
 
         $address = $this->getSource()->getShippingAddress();
         if ($address->getBaseInsurance()) {
-            $this->addTotalBefore(
+            $this->addTotal(
                 new Varien_Object([
                     'code' => 'insurance',
                     'value' => $address->getInsurance(),
                     'base_value' => $address->getBaseInsurance(),
-                    'label' => $this->helper('it_insurance')->__('Insurance'),
+                    'label' => $this->helper('itransition_insurance')->__('Insurance'),
                 ]), ['shipping', 'tax']);
         }
 

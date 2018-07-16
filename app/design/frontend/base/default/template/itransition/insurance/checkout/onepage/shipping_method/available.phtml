@@ -1,6 +1,6 @@
 <?php /** @var $this Mage_Checkout_Block_Onepage_Shipping_Method_Available */ ?>
 <?php $_shippingRateGroups = $this->getShippingRates(); ?>
-<?php $_insurance = Mage::getModel('it_insurance/shipping')->getRates(); ?>
+<?php $_insurance = Mage::getModel('itransition_insurance/shipping')->getRates(); ?>
 <?php if (!$_shippingRateGroups): ?>
     <p><?php echo $this->__('Sorry, no quotes are available for this order at this time.') ?></p>
 <?php else: ?>

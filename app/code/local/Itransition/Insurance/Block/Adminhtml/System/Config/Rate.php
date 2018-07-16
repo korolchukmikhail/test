@@ -14,7 +14,7 @@ class Itransition_Insurance_Block_Adminhtml_System_Config_Rate extends Mage_Admi
         $this->setElement($element);
 
         /** @var Itransition_Insurance_Model_Shipping $shipping * */
-        $shipping = Mage::getModel('it_insurance/shipping');
+        $shipping = Mage::getModel('itransition_insurance/shipping');
         $this->_rates = $shipping->getRates();
         $shipping_carriers = $shipping->getCarriers();
 
@@ -56,7 +56,7 @@ class Itransition_Insurance_Block_Adminhtml_System_Config_Rate extends Mage_Admi
 
     private function _getValue($method_code, $field)
     {
-        if ($this->_rates && isset($this->_rates[$method_code]) && isset($this->_rates[$method_code][$field])) {
+        if ($this->_rates && isset($this->_rates[$method_code], $this->_rates[$method_code][$field])) {
             return $this->_rates[$method_code][$field];
         }
 
