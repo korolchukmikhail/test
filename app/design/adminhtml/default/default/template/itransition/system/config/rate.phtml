@@ -41,7 +41,7 @@ $element = $this->getElement();
                                 <label>
                                     <span><?php echo $helper->__('Rate') ?></span>
                                     <input type="text" name="<?php echo $element->getName() ?>[rate][]"
-                                           class="itSystemConfigInsurance__input"
+                                           class="itSystemConfigInsurance__input validate-number"
                                            value="<?php echo $this->getValue($method['value'], 'rate') ?>">
                                 </label>
                                 <input type="hidden" name="<?php echo $element->getName() ?>[value][]"
