@@ -1,8 +1,0 @@
-<?php $_source  = $this->getSource() ?>
-
-<?php if ((float) $_source->getShippingAddress()->getInsurance()): ?>
-    <tr>
-        <td class="label"><?php echo Mage::helper('itransition_insurance')->__('Insurance') ?></td>
-        <td><?php echo (float) $_source->getShippingAddress()->getInsurance() ?></td>
-    </tr>
-<?php endif; ?>
