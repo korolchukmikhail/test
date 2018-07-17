@@ -37,3 +37,8 @@
 .itSystemConfigInsurance__shippingMethods td label span {
     padding: 0 5px 0 0;
 }
+
+.insuranceForShipping {
+    display: inline-block;
+    margin-left: 15px;
+}

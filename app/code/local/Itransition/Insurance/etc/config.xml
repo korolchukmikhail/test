@@ -30,6 +30,8 @@
                     <insurance>
                         <class>Itransition_Insurance_Model_Sales_Quote</class>
                         <after>subtotal,tax</after>
+                        <before>grand_total</before>
+                        <admin_renderer>itransition_insurance/adminhtml_sales_order_create_totals</admin_renderer>
                     </insurance>
                 </totals>
             </quote>

@@ -5,7 +5,7 @@ class Itransition_Insurance_Block_Adminhtml_System_Config_Rate extends Mage_Admi
     protected $_rates = [];
     /** @var Itransition_Insurance_Model_Shipping $_shippingModel**/
     protected $_shippingModel;
-    protected $_template = 'itransition/system/config/rate.phtml';
+    protected $_template = 'itransition/insurance/system/config/rate.phtml';
 
     /**
      * @inheritdoc
