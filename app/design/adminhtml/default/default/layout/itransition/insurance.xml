@@ -9,30 +9,40 @@
 
     <adminhtml_sales_order_view>
         <reference name="order_totals">
-            <block type="itransition_insurance/adminhtml_sales_order_totals" name="insurance.order.total"
-                   output="toHtml" template="itransition/sales/order/total.phtml"/>
+            <block type="itransition_insurance/adminhtml_sales_order_totals"
+                   name="insurance.order.total"/>
         </reference>
     </adminhtml_sales_order_view>
 
     <adminhtml_sales_order_invoice_new>
-        <reference name="order_totals">
-            <block type="itransition_insurance/adminhtml_sales_order_invoice_totals"/>
+        <reference name="invoice_totals">
+            <block type="itransition_insurance/adminhtml_sales_order_invoice_totals"
+                   name="insurance.order.invoice.total"/>
         </reference>
     </adminhtml_sales_order_invoice_new>
     <adminhtml_sales_order_invoice_view>
-        <reference name="order_totals">
-            <block type="itransition_insurance/adminhtml_sales_order_invoice_totals"/>
+        <reference name="invoice_totals">
+            <block type="itransition_insurance/adminhtml_sales_order_invoice_totals"
+                   name="insurance.order.invoice.total"/>
         </reference>
     </adminhtml_sales_order_invoice_view>
 
     <adminhtml_sales_order_creditmemo_new>
-        <reference name="order_totals">
-            <block type="itransition_insurance/adminhtml_sales_order_creditmemo_totals"/>
+        <reference name="creditmemo_totals">
+            <block type="itransition_insurance/adminhtml_sales_order_creditmemo_totals"
+                   name="insurance.order.creditmemo.total"/>
         </reference>
     </adminhtml_sales_order_creditmemo_new>
     <adminhtml_sales_order_creditmemo_view>
-        <reference name="order_totals">
-            <block type="itransition_insurance/adminhtml_sales_order_creditmemo_totals"/>
+        <reference name="creditmemo_totals">
+            <block type="itransition_insurance/adminhtml_sales_order_creditmemo_totals"
+                   name="insurance.order.creditmemo.total"/>
         </reference>
     </adminhtml_sales_order_creditmemo_view>
+    <adminhtml_sales_order_creditmemo_updateqty>
+        <reference name="creditmemo_totals">
+            <block type="itransition_insurance/adminhtml_sales_order_creditmemo_totals"
+                   name="insurance.order.creditmemo.total"/>
+        </reference>
+    </adminhtml_sales_order_creditmemo_updateqty>
 </layout>

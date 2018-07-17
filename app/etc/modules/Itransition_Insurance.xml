@@ -4,6 +4,9 @@
         <Itransition_Insurance>
             <active>true</active>
             <codePool>local</codePool>
+            <depends>
+                <Mage_Sales />
+            </depends>
         </Itransition_Insurance>
     </modules>
 </config>
