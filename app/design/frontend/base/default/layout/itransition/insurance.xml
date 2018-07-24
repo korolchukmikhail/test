@@ -41,4 +41,26 @@
             </action>
         </reference>
     </checkout_cart_index>
+
+    <sales_email_order_items>
+        <reference name="order_totals">
+            <block type="itransition_insurance/adminhtml_sales_order_totals"
+                   name="insurance.order.total"/>
+        </reference>
+    </sales_email_order_items>
+
+    <sales_email_order_invoice_items>
+        <reference name="invoice_totals">
+            <block type="itransition_insurance/adminhtml_sales_order_invoice_totals"
+                   name="insurance.order.invoice.total"/>
+        </reference>
+    </sales_email_order_invoice_items>
+
+    <sales_email_order_creditmemo_items>
+        <reference name="creditmemo_totals">
+            <block type="itransition_insurance/adminhtml_sales_order_creditmemo_totals"
+                   name="insurance.order.creditmemo.total"/>
+        </reference>
+    </sales_email_order_creditmemo_items>
+
 </layout>
