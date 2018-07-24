@@ -61,9 +61,22 @@
                         <input class="insuranceForShipping__checkbox"
                                type="checkbox"
                                name="shipping_method_insurance"
-                            <?php if (($_rate->getCode() === $this->getAddressShippingMethod()) && (float)$this->getQuote()->getShippingAddress()->getInsurance() > 0) echo 'checked' ?>
+                            <?php if (($_rate->getCode() === $this->getQuote()->getShippingAddress()->getShippingMethod()) && (float)$this->getQuote()->getShippingAddress()->getInsurance() > 0) echo 'checked' ?>
                                value="<?php echo $_insurance_method_price?>"></label>
                 </div>
+            <script>
+                AdminOrder.prototype.setInsurance = function (insurance) {
+                    var data =  {collect_shipping_rates: 1};
+                    data['order[shipping_method_insurance]'] = insurance;
+                    this.loadArea(['shipping_method', 'totals'], true, data);
+                };
+
+                $$('input[type="checkbox"][name="shipping_method_insurance"]').each(function(el){
+                    Event.observe(el, 'click', function(){
+                        order.setInsurance(el.getValue());
+                    });
+                });
+            </script>
             <?php endif; ?>
 
             <br/>

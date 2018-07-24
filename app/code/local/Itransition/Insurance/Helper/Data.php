@@ -8,7 +8,7 @@ class Itransition_Insurance_Helper_Data extends Mage_Core_Helper_Data
         return Mage::getStoreConfigFlag('insurance/config/enabled', $store);
     }
 
-    public function setInsuranceToAddress($address, $insurance)
+    public function setInsuranceToAddress($address, $insurance, $save = false)
     {
         if ($insurance) {
             $insurance = (float)$insurance;
@@ -17,6 +17,10 @@ class Itransition_Insurance_Helper_Data extends Mage_Core_Helper_Data
         } else {
             $address->setInsurance(0);
             $address->setBaseInsurance(0);
+        }
+
+        if ($save) {
+            $address->save();
         }
     }
 

@@ -65,6 +65,17 @@
                     </insurance_to_address>
                 </observers>
             </checkout_controller_onepage_save_shipping_method>
+
+            <adminhtml_sales_order_create_process_data_before>
+                <observers>
+                    <insurance_to_address>
+                        <type>singleton</type>
+                        <class>itransition_insurance/observer</class>
+                        <method>setInsuranceOnCreateOrder</method>
+                    </insurance_to_address>
+                </observers>
+            </adminhtml_sales_order_create_process_data_before>
+
             <checkout_controller_multishipping_shipping_post>
                 <observers>
                     <insurance_to_address_multi>
@@ -74,6 +85,7 @@
                     </insurance_to_address_multi>
                 </observers>
             </checkout_controller_multishipping_shipping_post>
+
             <core_copy_fieldset_customer_address_to_quote_address>
                 <observers>
                     <unset_insurance_in_billing_address>
@@ -83,6 +95,7 @@
                     </unset_insurance_in_billing_address>
                 </observers>
             </core_copy_fieldset_customer_address_to_quote_address>
+
             <sales_quote_address_save_before>
                 <observers>
                     <set_insurance_to_address>

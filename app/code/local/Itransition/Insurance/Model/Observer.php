@@ -73,6 +73,28 @@ class Itransition_Insurance_Model_Observer
         return $this;
     }
 
+    public function setInsuranceOnCreateOrder(Varien_Event_Observer $observer)
+    {
+        if (!$this->_helper->isEnabled()) {
+            return $this;
+        }
+
+        try {
+            $request = $this->getRequest($observer);
+            $orderData = $request->get('order');
+            if ($orderData && !isset($orderData['send_confirmation']) &&
+                (isset($orderData['shipping_method_insurance']) || isset($orderData['shipping_method']))) {
+                $address = $observer->getOrderCreateModel()->getQuote()->getShippingAddress();
+                $insurance = isset($orderData['shipping_method_insurance']) ? $orderData['shipping_method_insurance'] : 0;
+                $this->_helper->setInsuranceToAddress($address, $insurance, true);
+            }
+        } catch (Exception $e) {
+            Mage::logException($e);
+        }
+
+        return $this;
+    }
+
     public function setMultiShippingInsurance(Varien_Event_Observer $observer)
     {
         if (!$this->_helper->isEnabled()) {
