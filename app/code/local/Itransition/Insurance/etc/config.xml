@@ -107,13 +107,23 @@
 
             <sales_quote_address_save_before>
                 <observers>
+                    <save_insurance_to_address>
+                        <type>singleton</type>
+                        <class>itransition_insurance/observer</class>
+                        <method>saveInsurance</method>
+                    </save_insurance_to_address>
+                </observers>
+            </sales_quote_address_save_before>
+
+            <sales_quote_address_collection_load_after>
+                <observers>
                     <set_insurance_to_address>
                         <type>singleton</type>
                         <class>itransition_insurance/observer</class>
-                        <method>setInsuranceEstimate</method>
+                        <method>setInsuranceToAddress</method>
                     </set_insurance_to_address>
                 </observers>
-            </sales_quote_address_save_before>
+            </sales_quote_address_collection_load_after>
 
             <paypal_prepare_line_items>
                 <observers>

@@ -15,18 +15,18 @@ $table = $installer->getConnection()
         'nullable' => false,
         'primary' => true,
     ], 'ID')
-    ->addColumn('insurance', Varien_Db_Ddl_Table::TYPE_DECIMAL, null, [], 'Insurance')
-    ->addColumn('insurance_base', Varien_Db_Ddl_Table::TYPE_DECIMAL, null, [], 'Insurance Base currency')
+    ->addColumn('insurance', Varien_Db_Ddl_Table::TYPE_DECIMAL, '12,4', [], 'Insurance')
+    ->addColumn('base_insurance', Varien_Db_Ddl_Table::TYPE_DECIMAL, '12,4', [], 'Insurance Base currency')
     ->addColumn('quote_address', Varien_Db_Ddl_Table::TYPE_INTEGER, null, [
         'unsigned' => true,
         'nullable' => false,
     ], 'Link with quote address')
     ->addColumn('order_address', Varien_Db_Ddl_Table::TYPE_INTEGER, null, [
         'unsigned' => true,
-        'nullable' => false,
+        'nullable' => true,
     ], 'Link with order address')
     ->addColumn('created', Varien_Db_Ddl_Table::TYPE_TIMESTAMP, null, [
-        'default' => 'CURRENT_TIMESTAMP',
+        'default' =>  Varien_Db_Ddl_Table::TIMESTAMP_INIT,
     ], 'Date')
     ->addIndex($installer->getIdxName('itransition_insurance/insurance', ['quote_address']), ['quote_address'])
     ->addIndex($installer->getIdxName('itransition_insurance/insurance', ['order_address']), ['order_address'])
