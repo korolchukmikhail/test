@@ -144,6 +144,19 @@
                 </base_insurance>
             </sales_convert_order_address>
         </fieldsets>
+
+        <pdf>
+            <totals>
+                <itransition_insurance translate="title">
+                    <title>Insurance</title>
+                    <source_field>insurance</source_field>
+                    <model>Itransition_Insurance_Model_Pdf_Total</model>
+                    <font_size>7</font_size>
+                    <display_zero>0</display_zero>
+                    <sort_order>300</sort_order>
+                </itransition_insurance>
+            </totals>
+        </pdf>
     </global>
 
     <adminhtml>

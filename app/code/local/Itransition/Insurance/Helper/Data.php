@@ -3,7 +3,7 @@
 class Itransition_Insurance_Helper_Data extends Mage_Core_Helper_Data
 {
 
-    const PAYPAL_ITEM_NAME = 'Insurance';
+    const MAIN_LABEL_INSURANCE = 'Insurance';
 
     public function isEnabled($store = null)
     {

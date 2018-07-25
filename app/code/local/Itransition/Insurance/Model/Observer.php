@@ -122,7 +122,7 @@ class Itransition_Insurance_Model_Observer
         $shippingAddress = $cart->getSalesEntity()->getShippingAddress();
 
         if ($shippingAddress && (float)($amount = $shippingAddress->getInsurance()) > 0) {
-            $cart->addItem(Itransition_Insurance_Helper_Data::PAYPAL_ITEM_NAME, 1, $amount);
+            $cart->addItem(Itransition_Insurance_Helper_Data::MAIN_LABEL_INSURANCE, 1, $amount);
         }
 
         return $this;

@@ -3,7 +3,7 @@
 class Itransition_Insurance_Block_Adminhtml_System_Config_Rate extends Mage_Adminhtml_Block_System_Config_Form_Field
 {
     protected $_rates = [];
-    /** @var Itransition_Insurance_Model_Shipping $_shippingModel**/
+    /** @var Itransition_Insurance_Model_Shipping $_shippingModel * */
     protected $_shippingModel;
     protected $_template = 'itransition/insurance/system/config/rate.phtml';
 
