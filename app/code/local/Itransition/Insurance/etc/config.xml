@@ -15,7 +15,16 @@
         <models>
             <itransition_insurance>
                 <class>Itransition_Insurance_Model</class>
+                <resourceModel>itransition_insurance_resource</resourceModel>
             </itransition_insurance>
+            <itransition_insurance_resource>
+                <class>Itransition_Insurance_Model_Resource</class>
+                <entities>
+                    <insurance>
+                        <table>itransition_insurance_insurance</table>
+                    </insurance>
+                </entities>
+            </itransition_insurance_resource>
         </models>
 
         <blocks>
