@@ -116,6 +116,18 @@ class Itransition_Insurance_Model_Observer
         return $this;
     }
 
+    public function prepareItemsPaypal(Varien_Event_Observer $observer)
+    {
+        $cart = $observer->getPaypalCart();
+        $shippingAddress = $cart->getSalesEntity()->getShippingAddress();
+
+        if ($shippingAddress && (float)($amount = $shippingAddress->getInsurance()) > 0) {
+            $cart->addItem(Itransition_Insurance_Helper_Data::PAYPAL_ITEM_NAME, 1, $amount);
+        }
+
+        return $this;
+    }
+
     protected function getRequest(Varien_Event_Observer $observer)
     {
         $request = $observer->getRequest();

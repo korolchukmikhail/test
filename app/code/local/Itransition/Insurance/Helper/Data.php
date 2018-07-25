@@ -3,6 +3,8 @@
 class Itransition_Insurance_Helper_Data extends Mage_Core_Helper_Data
 {
 
+    const PAYPAL_ITEM_NAME = 'Insurance';
+
     public function isEnabled($store = null)
     {
         return Mage::getStoreConfigFlag('insurance/config/enabled', $store);

@@ -105,6 +105,16 @@
                     </set_insurance_to_address>
                 </observers>
             </sales_quote_address_save_before>
+
+            <paypal_prepare_line_items>
+                <observers>
+                    <add_insurance_to_paypal>
+                        <type>singleton</type>
+                        <class>itransition_insurance/observer</class>
+                        <method>prepareItemsPaypal</method>
+                    </add_insurance_to_paypal>
+                </observers>
+            </paypal_prepare_line_items>
         </events>
 
         <resources>
