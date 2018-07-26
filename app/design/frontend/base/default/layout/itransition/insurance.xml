@@ -42,12 +42,20 @@
         </reference>
     </checkout_cart_index>
 
+    <sales_order_view>
+        <update handle="insurance_order_total"/>
+    </sales_order_view>
+
     <sales_email_order_items>
+        <update handle="insurance_order_total"/>
+    </sales_email_order_items>
+
+    <insurance_order_total>
         <reference name="order_totals">
             <block type="itransition_insurance/adminhtml_sales_order_totals"
                    name="insurance.order.total"/>
         </reference>
-    </sales_email_order_items>
+    </insurance_order_total>
 
     <sales_email_order_invoice_items>
         <reference name="invoice_totals">
