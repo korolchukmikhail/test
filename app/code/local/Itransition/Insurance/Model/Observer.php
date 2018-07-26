@@ -41,26 +41,25 @@ class Itransition_Insurance_Model_Observer
             $address = $observer->getQuoteAddress();
             $request = $this->getRequest($observer);
 
+            //For update total on cart page(estimate)
             if ($request->getActionName() == self::ACTION_NAME_ESTIMATE
                 && $address->getAddressType() == Mage_Customer_Model_Address::TYPE_SHIPPING) {
                 $insurance = $request->get(self::REQUEST_PARAM_NAME, 0);
                 $this->_helper->setInsuranceToAddress($address, $insurance);
             }
 
-            if (!is_null($address->getInsurance())) {
-                $insuranceModel = Mage::getModel('itransition_insurance/insurance')->load($address->getId(), 'quote_address');
-                $insurance = (float)$address->getInsurance();
-                if ($insurance) {
-                    if ($insuranceModel->getIsnurance() != $insurance) {
-                        $insuranceModel->setQuoteAddress($address->getId());
-                        $insuranceModel->setInsurance((float)$address->getInsurance());
-                        $insuranceModel->setBaseInsurance((float)$address->getBaseInsurance());
-                        $insuranceModel->save();
-                    }
-                } else {
-                    if ($insuranceModel->getId()) {
-                        $insuranceModel->delete();
-                    }
+            $insuranceModel = Mage::getModel('itransition_insurance/insurance');
+            $insurance = (float)$address->getInsurance();
+            if ($insurance) {
+                $insuranceModel->setInsuranceId($address->getInsuranceId());
+                $insuranceModel->setQuoteAddress($address->getId());
+                $insuranceModel->setInsurance((float)$address->getInsurance());
+                $insuranceModel->setBaseInsurance((float)$address->getBaseInsurance());
+                $insuranceModel->save();
+            } else {
+                if ($address->getInsuranceId()) {
+                    $insuranceModel->setInsuranceId($address->getInsuranceId());
+                    $insuranceModel->delete();
                 }
             }
         } catch (Exception $e) {
@@ -70,27 +69,55 @@ class Itransition_Insurance_Model_Observer
         return $this;
     }
 
-    public function setInsuranceToAddress(Varien_Event_Observer $observer)
+    public function setInsuranceFromQuoteToOrderAddress(Varien_Event_Observer $observer)
+    {
+        try {
+            $order = $observer->getOrder();
+            $quote = $order->getQuote();
+            $orderAddress = $order->getShippingAddress();
+            $quoteAddress = $quote->getShippingAddress();
+
+            $insuranceModel = Mage::getModel('itransition_insurance/insurance');
+            $insurance = (float)$quoteAddress->getInsurance();
+
+            if ($quoteAddress->getInsuranceId() && $insurance) {
+                $insuranceModel->setInsuranceId($quoteAddress->getInsuranceId());
+                $insuranceModel->setOrderAddress($orderAddress->getId());
+                $insuranceModel->save();
+            }
+        } catch (Exception $e) {
+            Mage::logException($e);
+        }
+    }
+
+    public function setInsuranceToQuoteAddress(Varien_Event_Observer $observer)
+    {
+        return $this->setInsuranceToAddress($observer, 'quote');
+    }
+
+    public function setInsuranceToOrderAddress(Varien_Event_Observer $observer)
+    {
+        return $this->setInsuranceToAddress($observer, 'order');
+    }
+
+    protected function setInsuranceToAddress(Varien_Event_Observer $observer, $type)
     {
         if (!$this->_helper->isEnabled()) {
             return $this;
         }
 
-        $addressCollection = $observer->getQuoteAddressCollection();
-
-        try {
-            foreach ($addressCollection as $address) {
-                if ($address->getAddressType() == Mage_Customer_Model_Address::TYPE_SHIPPING) { //TODO: NEED OPTIMIZATION
-                    $insuranceModel = Mage::getModel('itransition_insurance/insurance')->load($address->getId(), 'quote_address');
-                    if (!is_null($insuranceModel->getInsurance())) {
-                        $address->setInsurance($insuranceModel->getInsurance());
-                        $address->setBaseInsurance($insuranceModel->getBaseInsurance());
-                    }
-                }
-            }
-        } catch (Exception $e) {
-            Mage::logException($e);
+        $method = 'get' . ucfirst($type) . 'AddressCollection';
+        $addressCollection = $observer->$method();
+        $insuranceTable = Mage::getSingleton('core/resource')->getTableName('itransition_insurance/insurance');
+        $field = 'address_id';
+        if ($type == 'order') {
+            $field = 'entity_id';
         }
+        $addressCollection->getSelect()->joinLeft(
+            ['insurance' => $insuranceTable],
+            'main_table.' . $field . ' = insurance.' . $type . '_address',
+            ['insurance' => 'insurance', 'base_insurance' => 'base_insurance', 'insurance_id' => 'insurance_id']
+        );
 
         return $this;
     }
