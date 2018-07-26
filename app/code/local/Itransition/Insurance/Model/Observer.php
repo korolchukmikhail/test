@@ -12,25 +12,6 @@ class Itransition_Insurance_Model_Observer
         $this->_helper = Mage::helper('itransition_insurance');
     }
 
-    public function unsInsuranceInBilling(Varien_Event_Observer $observer)
-    {
-        if (!$this->_helper->isEnabled()) {
-            return $this;
-        }
-
-        $target = $observer->getTarget();
-        if ($target && $target->getAddressType() == Mage_Customer_Model_Address::TYPE_BILLING) {
-            /**
-             * Unset new field in billing address for fix null value on OPC with single shipping address
-             * This filed is set to NULL
-             * app/code/core/Mage/Checkout/Model/Type/Onepage.php 352 line
-             */
-            $target->unsetData('insurance');
-        }
-
-        return $this;
-    }
-
     public function saveInsurance(Varien_Event_Observer $observer)
     {
         if (!$this->_helper->isEnabled()) {
@@ -41,25 +22,26 @@ class Itransition_Insurance_Model_Observer
             $address = $observer->getQuoteAddress();
             $request = $this->getRequest($observer);
 
-            //For update total on cart page(estimate)
-            if ($request->getActionName() == self::ACTION_NAME_ESTIMATE
-                && $address->getAddressType() == Mage_Customer_Model_Address::TYPE_SHIPPING) {
-                $insurance = $request->get(self::REQUEST_PARAM_NAME, 0);
-                $this->_helper->setInsuranceToAddress($address, $insurance);
-            }
+            if ($address->getAddressType() == Mage_Customer_Model_Address::TYPE_SHIPPING) {
+                //For update total on cart page(estimate)
+                if ($request->getActionName() == self::ACTION_NAME_ESTIMATE) {
+                    $insurance = $request->get(self::REQUEST_PARAM_NAME, 0);
+                    $this->_helper->setInsuranceToAddress($address, $insurance);
+                }
 
-            $insuranceModel = Mage::getModel('itransition_insurance/insurance');
-            $insurance = (float)$address->getInsurance();
-            if ($insurance) {
-                $insuranceModel->setInsuranceId($address->getInsuranceId());
-                $insuranceModel->setQuoteAddress($address->getId());
-                $insuranceModel->setInsurance((float)$address->getInsurance());
-                $insuranceModel->setBaseInsurance((float)$address->getBaseInsurance());
-                $insuranceModel->save();
-            } else {
-                if ($address->getInsuranceId()) {
+                $insuranceModel = Mage::getModel('itransition_insurance/insurance');
+                $insurance = (float)$address->getInsurance();
+                if ($insurance) {
                     $insuranceModel->setInsuranceId($address->getInsuranceId());
-                    $insuranceModel->delete();
+                    $insuranceModel->setQuoteAddress($address->getId());
+                    $insuranceModel->setInsurance((float)$address->getInsurance());
+                    $insuranceModel->setBaseInsurance((float)$address->getBaseInsurance());
+                    $insuranceModel->save();
+                } else {
+                    if ($address->getInsuranceId()) {
+                        $insuranceModel->setInsuranceId($address->getInsuranceId());
+                        $insuranceModel->delete();
+                    }
                 }
             }
         } catch (Exception $e) {
@@ -81,8 +63,15 @@ class Itransition_Insurance_Model_Observer
                 $insuranceModel = Mage::getModel('itransition_insurance/insurance');
                 $insurance = (float)$quoteAddress->getInsurance();
 
-                if ($quoteAddress->getInsuranceId() && $insurance) {
-                    $insuranceModel->setInsuranceId($quoteAddress->getInsuranceId());
+                if (!$insurance) {
+                    $insuranceModel->load($quoteAddress->getId(), 'quote_address');
+                    $insurance = (float)$insuranceModel->getInsurance();
+                }
+
+                $insuranceId = $quoteAddress->getInsuranceId() ?? $insuranceModel->getId();
+
+                if ($insuranceId && $insurance) {
+                    $insuranceModel->setInsuranceId($insuranceId);
                     $insuranceModel->setOrderAddress($orderAddress->getId());
                     $insuranceModel->save();
                 }
@@ -115,11 +104,14 @@ class Itransition_Insurance_Model_Observer
         if ($type == 'order') {
             $field = 'entity_id';
         }
-        $addressCollection->getSelect()->joinLeft(
-            ['insurance' => $insuranceTable],
-            'main_table.' . $field . ' = insurance.' . $type . '_address',
-            ['insurance' => 'insurance', 'base_insurance' => 'base_insurance', 'insurance_id' => 'insurance_id']
-        );
+        $from = $addressCollection->getSelect()->getPart('from');
+        if (!isset($from['insurance_' . $type])) {
+            $addressCollection->getSelect()->joinLeft(
+                ['insurance_' . $type => $insuranceTable],
+                'main_table.' . $field . ' = insurance_' . $type . '.' . $type . '_address',
+                ['insurance' => 'insurance', 'base_insurance' => 'base_insurance', 'insurance_id' => 'insurance_id']
+            );
+        }
 
         return $this;
     }
@@ -156,7 +148,7 @@ class Itransition_Insurance_Model_Observer
                 (isset($orderData['shipping_method_insurance']) || isset($orderData['shipping_method']))) {
                 $address = $observer->getOrderCreateModel()->getQuote()->getShippingAddress();
                 $insurance = isset($orderData['shipping_method_insurance']) ? $orderData['shipping_method_insurance'] : 0;
-                $this->_helper->setInsuranceToAddress($address, $insurance, true);
+                $this->_helper->setInsuranceToAddress($address, $insurance);
             }
         } catch (Exception $e) {
             Mage::logException($e);

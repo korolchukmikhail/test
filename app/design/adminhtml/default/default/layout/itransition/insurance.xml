@@ -14,6 +14,14 @@
         </reference>
     </adminhtml_sales_order_view>
 
+    <adminhtml_sales_order_create_load_block_shipping_method>
+        <reference name="form">
+            <action method="setTemplate" ifconfig="insurance/config/enabled">
+                <template>itransition/insurance/sales/order/create/shipping/method/form.phtml</template>
+            </action>
+        </reference>
+    </adminhtml_sales_order_create_load_block_shipping_method>
+
     <adminhtml_sales_order_create_index>
         <reference name="head">
             <action method="addCss">
