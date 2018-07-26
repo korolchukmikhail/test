@@ -74,16 +74,18 @@ class Itransition_Insurance_Model_Observer
         try {
             $order = $observer->getOrder();
             $quote = $order->getQuote();
-            $orderAddress = $order->getShippingAddress();
-            $quoteAddress = $quote->getShippingAddress();
+            if ($order && $quote) {
+                $orderAddress = $order->getShippingAddress();
+                $quoteAddress = $quote->getShippingAddress();
 
-            $insuranceModel = Mage::getModel('itransition_insurance/insurance');
-            $insurance = (float)$quoteAddress->getInsurance();
+                $insuranceModel = Mage::getModel('itransition_insurance/insurance');
+                $insurance = (float)$quoteAddress->getInsurance();
 
-            if ($quoteAddress->getInsuranceId() && $insurance) {
-                $insuranceModel->setInsuranceId($quoteAddress->getInsuranceId());
-                $insuranceModel->setOrderAddress($orderAddress->getId());
-                $insuranceModel->save();
+                if ($quoteAddress->getInsuranceId() && $insurance) {
+                    $insuranceModel->setInsuranceId($quoteAddress->getInsuranceId());
+                    $insuranceModel->setOrderAddress($orderAddress->getId());
+                    $insuranceModel->save();
+                }
             }
         } catch (Exception $e) {
             Mage::logException($e);
