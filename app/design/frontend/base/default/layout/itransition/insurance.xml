@@ -5,6 +5,10 @@
             <action method="addCss" ifconfig="insurance/config/enabled">
                 <name>css/itransition/insurance.css</name>
             </action>
+            <action method="addItem" ifconfig="insurance/config/enabled">
+                <type>skin_js</type>
+                <name>js/itransition/insurance.js</name>
+            </action>
         </reference>
     </checkout_onepage_index>
 
@@ -21,6 +25,10 @@
             <action method="addCss" ifconfig="insurance/config/enabled">
                 <name>css/itransition/insurance.css</name>
             </action>
+            <action method="addItem" ifconfig="insurance/config/enabled">
+                <type>skin_js</type>
+                <name>js/itransition/insurance.js</name>
+            </action>
         </reference>
         <reference name="checkout_shipping">
             <action method="setTemplate" ifconfig="insurance/config/enabled">
@@ -33,6 +41,10 @@
         <reference name="head">
             <action method="addCss" ifconfig="insurance/config/enabled">
                 <name>css/itransition/insurance.css</name>
+            </action>
+            <action method="addItem" ifconfig="insurance/config/enabled">
+                <type>skin_js</type>
+                <name>js/itransition/insurance.js</name>
             </action>
         </reference>
         <reference name="checkout.cart.shipping">

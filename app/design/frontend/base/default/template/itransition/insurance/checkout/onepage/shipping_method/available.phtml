@@ -1,6 +1,6 @@
 <?php /** @var $this Mage_Checkout_Block_Onepage_Shipping_Method_Available */ ?>
-<?php $_shippingRateGroups = $this->getShippingRates(); ?>
-<?php $_insurance = Mage::getModel('itransition_insurance/shipping')->getRates(); ?>
+<?php $_shippingRateGroups = $this->getShippingRates();
+$this->getQuote()->getShippingAddress() ?>
 <?php if (!$_shippingRateGroups): ?>
     <p><?php echo $this->__('Sorry, no quotes are available for this order at this time.') ?></p>
 <?php else: ?>
@@ -21,7 +21,7 @@
                             <?php echo $this->getLayout()->createBlock('itransition_insurance/insurance')
                                 ->setShow(true)
                                 ->setRate($_rate)
-                                ->setAddress($this->getQuote()->getShippingAddress())
+                                ->setId('insShipping__' . $_rate->getCode())
                                 ->setQuote($this->getQuote())
                                 ->toHtml() ?>
                             <?php else: ?>
@@ -47,7 +47,7 @@
                             <?php echo $this->getLayout()->createBlock('itransition_insurance/insurance')
                                     ->setShow(($_rate->getCode()===$this->getAddressShippingMethod()))
                                     ->setRate($_rate)
-                                    ->setAddress($this->getQuote()->getShippingAddress())
+                                    ->setId('insShipping__' . $_rate->getCode())
                                     ->setQuote($this->getQuote())
                                     ->toHtml() ?>
                             <?php endif ?>
@@ -66,17 +66,8 @@
         $$('input[type="radio"][name="shipping_method"]').each(function(el){
             Event.observe(el, 'click', function(){
                 var getShippingCode = el.getValue();
-                $$('input.insuranceForShipping__checkbox').each(function(ell){
-                    ell.checked = false;
-                });
-                $$('div.insuranceForShipping').each(function (ell) {
-                    ell.addClassName('insuranceForShipping-hidden');
-                });
 
                 if (el.checked === true) {
-                    if($('insuranceForShipping__' + getShippingCode)){
-                        $('insuranceForShipping__' + getShippingCode).removeClassName('insuranceForShipping-hidden');
-                    }
 
                     <?php if (!empty($shippingCodePrice)): ?>
                     var newPrice = shippingCodePrice[getShippingCode];

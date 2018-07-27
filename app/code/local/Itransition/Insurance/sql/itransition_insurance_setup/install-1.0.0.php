@@ -41,9 +41,9 @@ $table = $installer->getConnection()
         ['type' => Varien_Db_Adapter_Interface::INDEX_TYPE_UNIQUE]
     )
     ->addForeignKey($installer->getFkName('itransition_insurance/insurance', 'quote_address', 'sales/quote_address', 'address_id'),
-        'quote_address', $quoteAddressTable, 'address_id', Varien_Db_Ddl_Table::ACTION_NO_ACTION, Varien_Db_Ddl_Table::ACTION_NO_ACTION)
+        'quote_address', $quoteAddressTable, 'address_id', Varien_Db_Ddl_Table::ACTION_CASCADE, Varien_Db_Ddl_Table::ACTION_CASCADE)
     ->addForeignKey($installer->getFkName('itransition_insurance/insurance', 'order_address', 'sales/order_address', 'entity_id'),
-        'order_address', $orderAddressTable, 'entity_id', Varien_Db_Ddl_Table::ACTION_NO_ACTION, Varien_Db_Ddl_Table::ACTION_NO_ACTION)
+        'order_address', $orderAddressTable, 'entity_id', Varien_Db_Ddl_Table::ACTION_CASCADE, Varien_Db_Ddl_Table::ACTION_CASCADE)
     ->setComment('Link an insurance with a quote and an order');
 $installer->getConnection()->createTable($table);
 

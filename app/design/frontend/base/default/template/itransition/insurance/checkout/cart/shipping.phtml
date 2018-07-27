@@ -82,7 +82,12 @@
                                                 <?php endif; ?>
                                             </label>
                                         <?php endif ?>
-                                        <?php echo $this->getLayout()->createBlock('itransition_insurance/insurance')->setShow(($_rate->getCode()===$this->getAddressShippingMethod()))->setRate($_rate)->setQuote($this->getQuote())->toHtml() ?>
+                                        <?php echo $this->getLayout()->createBlock('itransition_insurance/insurance')
+                                            ->setShow(($_rate->getCode()===$this->getAddressShippingMethod()))
+                                            ->setRate($_rate)
+                                            ->setId('insShipping__' . $_rate->getCode())
+                                            ->setQuote($this->getQuote())
+                                            ->toHtml() ?>
                                     </li>
                                 <?php endforeach; ?>
                             </ul>
@@ -119,24 +124,6 @@
                 }
                 return VarienForm.prototype.submit.bind(coShippingMethodForm)();
             };
-
-            $$('input[type="radio"][name="estimate_method"]').each(function(el){
-                Event.observe(el, 'click', function(){
-                    var getShippingCode = el.getValue();
-                    $$('input.insuranceForShipping__checkbox').each(function(ell){
-                        ell.checked = false;
-                    });
-                    $$('div.insuranceForShipping').each(function (ell) {
-                        ell.addClassName('insuranceForShipping-hidden');
-                    });
-
-                    if (el.checked === true) {
-                        if($('insuranceForShipping__' + getShippingCode)){
-                            $('insuranceForShipping__' + getShippingCode).removeClassName('insuranceForShipping-hidden');
-                        }
-                    }
-                });
-            });
             //]]>
         </script>
 

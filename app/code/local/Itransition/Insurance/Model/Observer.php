@@ -25,7 +25,7 @@ class Itransition_Insurance_Model_Observer
             if ($address->getAddressType() == Mage_Customer_Model_Address::TYPE_SHIPPING) {
                 //For update total on cart page(estimate)
                 if ($request->getActionName() == self::ACTION_NAME_ESTIMATE) {
-                    $insurance = $request->get(self::REQUEST_PARAM_NAME, 0);
+                    $insurance = $request->get(self::REQUEST_PARAM_NAME. '__' . $address->getId(), 0);
                     $this->_helper->setInsuranceToAddress($address, $insurance);
                 }
 
@@ -126,7 +126,7 @@ class Itransition_Insurance_Model_Observer
             $request = $this->getRequest($observer);
             $address = $observer->getQuote()->getShippingAddress();
 
-            $insurance = $request->getPost(self::REQUEST_PARAM_NAME, 0);
+            $insurance = $request->getPost(self::REQUEST_PARAM_NAME. '__' . $address->getId(), 0);
             $this->_helper->setInsuranceToAddress($address, $insurance);
         } catch (Exception $e) {
             Mage::logException($e);
