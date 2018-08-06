@@ -12,6 +12,27 @@ class Itransition_Insurance_Model_Observer
         $this->_helper = Mage::helper('itransition_insurance');
     }
 
+    public function unsInsuranceInBilling(Varien_Event_Observer $observer)
+    {
+        if (!$this->_helper->isEnabled()) {
+            return $this;
+        }
+
+        $target = $observer->getTarget();
+        if ($target && $target->getAddressType() == Mage_Customer_Model_Address::TYPE_BILLING) {
+            /**
+             * Unset new field in billing address for fix null value on OPC with single shipping address
+             * This filed is set to NULL
+             * app/code/core/Mage/Checkout/Model/Type/Onepage.php 352 line
+             */
+            $target->unsetData('insurance');
+            $target->unsetData('base_insurance');
+            $target->unsetData('insurance_id');
+        }
+
+        return $this;
+    }
+
     public function saveInsurance(Varien_Event_Observer $observer)
     {
         if (!$this->_helper->isEnabled()) {

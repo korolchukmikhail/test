@@ -105,6 +105,16 @@
                 </observers>
             </sales_quote_address_save_after>
 
+            <core_copy_fieldset_customer_address_to_quote_address>
+                <observers>
+                    <unset_insurance_in_billing_address>
+                        <type>singleton</type>
+                        <class>itransition_insurance/observer</class>
+                        <method>unsInsuranceInBilling</method>
+                    </unset_insurance_in_billing_address>
+                </observers>
+            </core_copy_fieldset_customer_address_to_quote_address>
+
             <sales_quote_address_collection_load_before>
                 <observers>
                     <set_insurance_to_quote_address>
