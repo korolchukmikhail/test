@@ -1,0 +1,71 @@
+<layout version="0.1.0">
+    <adminhtml_system_config_edit>
+        <reference name="head">
+            <action method="addCss">
+                <name>itransition/insurance.css</name>
+            </action>
+        </reference>
+    </adminhtml_system_config_edit>
+
+    <adminhtml_sales_order_create_index>
+        <reference name="head">
+            <action method="addCss">
+                <name>itransition/insurance.css</name>
+            </action>
+        </reference>
+    </adminhtml_sales_order_create_index>
+
+    <adminhtml_sales_order_view>
+        <reference name="order_totals">
+            <block type="itransition_insurance/adminhtml_sales_order_totals"
+                   name="insurance.order.total"/>
+        </reference>
+    </adminhtml_sales_order_view>
+
+    <adminhtml_sales_order_create_load_block_shipping_method>
+        <reference name="form">
+            <action method="setTemplate" ifconfig="insurance/config/enabled">
+                <template>itransition/insurance/sales/order/create/shipping/method/form.phtml</template>
+            </action>
+        </reference>
+    </adminhtml_sales_order_create_load_block_shipping_method>
+
+    <adminhtml_sales_order_create_load_block_totals>
+        <reference name="totals">
+            <block type="itransition_insurance/adminhtml_sales_order_totals"
+                   name="insurance.order.total"/>
+        </reference>
+    </adminhtml_sales_order_create_load_block_totals>
+
+    <adminhtml_sales_order_invoice_new>
+        <update handle="invoice_update_handle"/>
+    </adminhtml_sales_order_invoice_new>
+    <adminhtml_sales_order_invoice_view>
+        <update handle="invoice_update_handle"/>
+    </adminhtml_sales_order_invoice_view>
+
+    <adminhtml_sales_order_creditmemo_new>
+        <update handle="creditmemo_update_handle"/>
+    </adminhtml_sales_order_creditmemo_new>
+    <adminhtml_sales_order_creditmemo_view>
+        <update handle="creditmemo_update_handle"/>
+    </adminhtml_sales_order_creditmemo_view>
+    <adminhtml_sales_order_creditmemo_updateqty>
+        <update handle="creditmemo_update_handle"/>
+    </adminhtml_sales_order_creditmemo_updateqty>
+
+    <creditmemo_update_handle>
+        <reference name="creditmemo_totals">
+            <block type="itransition_insurance/adminhtml_sales_order_creditmemo_totals"
+                   name="insurance.order.creditmemo.total"/>
+        </reference>
+    </creditmemo_update_handle>
+
+    <invoice_update_handle>
+        <reference name="invoice_totals">
+            <block type="itransition_insurance/adminhtml_sales_order_invoice_totals"
+                   name="insurance.order.invoice.total"/>
+        </reference>
+    </invoice_update_handle>
+
+</layout>

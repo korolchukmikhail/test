@@ -1,0 +1,20 @@
+.insShipping-hidden {
+    display: none;
+}
+
+#co-shipping-method-form .sp-methods dd .insShipping label {
+    font-size: 12px;
+    line-height: 12px;
+    padding: 7px 5px;
+    float: unset;
+}
+
+.insShipping label input[type=checkbox] {
+    width: 12px;
+    height: 12px;
+    display: block;
+    float: left;
+    margin-right: 12px;
+    margin-top: -1px;
+    margin-left: 10px;
+}

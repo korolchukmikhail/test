@@ -1,0 +1,22 @@
+<?php
+$insuranceRates = $this->getRates();
+$rate = $this->getRate();
+$address = $this->getAddress() ? $this->getAddress() : $this->getQuote()->getShippingAddress();
+$code = $rate->getCode();
+$addressId = $address->getId();
+$id = $this->getId();
+?>
+
+<?php if (isset($insuranceRates[$code]) && $insuranceRates[$code]['state']): ?>
+    <div id="<?= $id ?>"
+         class="insShipping insShipping__<?= $addressId ?> <?= ($this->getShow() ? '' : 'insShipping-hidden') ?>">
+        <label>
+            <span><?= $this->__('Insurance') ?>&nbsp;<span>+<?= $this->getPrice($rate) ?></span></span>
+            <input class="insShipping__checkbox"
+                   type="checkbox"
+                   name="shipping_method_insurance__<?= $addressId ?>"
+                <?= (($code === $address->getShippingMethod()) && (float)$address->getInsurance() > 0) ? 'checked' : '' ?>
+                   value="<?php echo $this->getPrice($rate, false) ?>">
+        </label>
+    </div>
+<?php endif; ?>

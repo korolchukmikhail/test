@@ -1,0 +1,56 @@
+<?php
+/** @var Itransition_Insurance_Block_Adminhtml_System_Config_Rate $this * */
+$shipping_carriers = $this->getCarriers();
+$helper = $this->helper('itransition_insurance');
+$element = $this->getElement();
+?>
+
+<div class="itSystemConfigInsurance">
+    <?php foreach ($shipping_carriers as $shipping_carrier) :
+        if (!empty($shipping_carrier['value'])) : ?>
+            <div class="itSystemConfigInsurance__row">
+                <div class="itSystemConfigInsurance__titleCarrier"><?php echo $shipping_carrier['label'] ?></div>
+                <table class="itSystemConfigInsurance__shippingMethods">
+                    <tbody>
+                    <?php foreach ($shipping_carrier['value'] as $method) : ?>
+                        <tr>
+                            <td class="itSystemConfigInsurance__titleShippingMethod"><?php echo $method['label'] ?></td>
+                            <td>
+                                <label>
+                                    <span><?php echo $helper->__('Enabled') ?></span>
+                                    <select
+                                            name="<?php echo $element->getName() ?>[state][]"
+                                            class="itSystemConfigInsurance__select">';
+                                        <option value="0" <?php echo($this->getValue($method['value'], 'state') ? '' : 'selected') ?>><?php echo $helper->__('No') ?></option>
+                                        <option value="1" <?php echo($this->getValue($method['value'], 'state') ? 'selected' : '') ?>><?php echo $helper->__('Yes') ?></option>
+                                    </select>
+                                </label>
+                            </td>
+                            <td>
+                                <label>
+                                    <span><?php echo $helper->__('Percent?') ?></span>
+                                    <select
+                                            name="<?php echo $element->getName() ?>[percent][]"
+                                            class="itSystemConfigInsurance__select itSystemConfigInsurance__select-percent">'
+                                        <option value="0" <?php echo($this->getValue($method['value'], 'percent') ? '' : 'selected') ?>><?php echo $helper->__('No') ?></option>
+                                        <option value="1" <?php echo($this->getValue($method['value'], 'percent') ? 'selected' : '') ?>><?php echo $helper->__('Yes') ?></option>
+                                    </select>
+                                </label>
+                            </td>
+                            <td>
+                                <label>
+                                    <span><?php echo $helper->__('Rate') ?></span>
+                                    <input type="text" name="<?php echo $element->getName() ?>[rate][]"
+                                           class="itSystemConfigInsurance__input validate-number"
+                                           value="<?php echo $this->getValue($method['value'], 'rate') ?>">
+                                </label>
+                                <input type="hidden" name="<?php echo $element->getName() ?>[value][]"
+                                       value="<?php echo $method['value'] ?>"></td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        <?php endif; ?>
+    <?php endforeach; ?>
+</div>
